@@ -6,7 +6,6 @@ import { invert } from "lodash"
 /**
  *
  * Broad reference: https://web.mit.edu/lpsolve/doc/LPBasics.htm
- * How to solve fixed costs with binaries: https://en.wikipedia.org/wiki/Big_M_method and https://www.youtube.com/watch?v=oVOuR-_x3U0
  */
 export async function solveLinearProgram<Vars extends string[] = string[]>(input: ILPInput<Vars>): Promise<ILPResponse<Vars>> {
   const validVariablesMap = input.formatVariables ? LPFormatter.getFormattedVariables(input.formatVariables) : undefined

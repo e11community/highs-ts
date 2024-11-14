@@ -1,7 +1,5 @@
 import { isBrowser } from "./util"
 
-// ! This file is for wrapping highs - it should not be exported from this package
-
 export interface HighsResponse {
   Status: string // 'Optimal
   Columns: Record<string, HighsVar>
