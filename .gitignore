@@ -1,2 +1,17 @@
 node_modules
 build
+
+*.tgz
+*.log
+.yarn/*
+!.yarn/patches
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+.pnp.*
+.idea
+
+coverage
+
+.DS_Store
