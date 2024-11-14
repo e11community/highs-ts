@@ -36,6 +36,20 @@ End
 })
 
 describe("solveLinearProgram", () => {
+  it("should solve the highs-js example program correctly", async () => {
+    const variables = ["x1", "x2", "x3", "x4"] as const
+    type Variables = (typeof variables)[number]
+
+    const input: ILPInput<Variables[]> = {
+      optimizationType: "max",
+      objective: "x1 + 2 x2 + 4 x3 + x4",
+      constraints: ["- x1 + x2 + x3 + 10 x4 <= 20", "x1 - 4 x2 + x3 <= 30", "x2 - 0.5 x4 = 0"],
+      bounds: ["0 <= x1 <= 40", "2 <= x4 <= 3"],
+    }
+    const result = await solveLinearProgram(input)
+    expect(result.objectiveValue).toBe(87.5)
+  })
+
   it("should solve a linear program correctly", async () => {
     const variables = ["Ms", "Ds", "Mg", "Dg"] as const
     type Variables = (typeof variables)[number]
@@ -73,7 +87,6 @@ describe("solveLinearProgram", () => {
       formatVariables,
     }
     const result = await solveLinearProgram(input)
-    console.log(result)
     // console.log(Object.keys(result.variableValues))
     expect(Object.keys(result.variableValues)).toEqual(formatVariables)
     expect(result).toEqual({ objectiveValue: 44, variableValues: { "M-s": 1, "0Ds": 1 } })
