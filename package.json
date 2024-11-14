@@ -1,0 +1,49 @@
+{
+  "name": "highs-ts",
+  "version": "0.0.0",
+  "description": "A type-safe linear-programming library",
+  "main": "./build/src/index.js",
+  "types": "./build/src/index.d.ts",
+  "files": [
+    "build/src/**/*"
+  ],
+  "repository": {
+    "url": "https://github.com/e11community/highs-ts",
+    "type": "git",
+    "directory": "packages/highs-ts"
+  },
+  "author": "Piers Concord",
+  "license": "MIT",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "jest",
+    "atest": "jest ${0}",
+    "test:coverage": "jest --coverage",
+    "clean": "rm -rf build",
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "publish": "yarn npm publish",
+    "prepack": "yarn run clean && yarn run build",
+    "pretest": "yarn run build",
+    "version": "yarn version $0"
+  },
+  "dependencies": {
+    "highs": "^1.8.0",
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.23",
+    "@types/lodash": "^4.17.13",
+    "@types/node": "^20.14.10",
+    "eslint": "^7.22.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.2.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.3"
+  },
+  "peerDependencies": {
+    "typescript": "^4.1.0 || ^5.0.0"
+  }
+}
