@@ -45,9 +45,11 @@ describe("solveLinearProgram", () => {
       objective: "x1 + 2 x2 + 4 x3 + x4",
       constraints: ["- x1 + x2 + x3 + 10 x4 <= 20", "x1 - 4 x2 + x3 <= 30", "x2 - 0.5 x4 = 0"],
       bounds: ["0 <= x1 <= 40", "2 <= x4 <= 3"],
+      integers: ["x1"],
     }
     const result = await solveLinearProgram(input)
-    expect(result.objectiveValue).toBe(87.5)
+    console.log(result)
+    expect(result.objectiveValue).toBe(86.8)
   })
 
   it("should solve a linear program correctly", async () => {

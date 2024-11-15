@@ -11,30 +11,32 @@ I loved the flexibility, power, and performance of [highs-js](https://github.com
 You can express a linear program as an object:
 
 ```ts
-const input: ILPInput = {
+const input: LPInput = {
   optimizationType: "max",
   objective: "x1 + 2 x2 + 4 x3 + x4",
   constraints: ["- x1 + x2 + x3 + 10 x4 <= 20", "x1 - 4 x2 + x3 <= 30", "x2 - 0.5 x4 = 0"],
   bounds: ["0 <= x1 <= 40", "2 <= x4 <= 3"],
+  integers: ["x1"],
 }
 const result = await solveLinearProgram(input)
-// { objectiveValue: 87.5, variableValues: { x1: 17.5, x2: 1, x3: 16.5, x4: 2 } }
+// { objectiveValue: 86.8, variableValues: { x1: 18, x2: 1.04, x3: 16.16, x4: 2.08 } }
 ```
 
-If you know your variables in advance, you can use ILPInput with a generic type for the variables and it will check your bounds, integers and binaries.
+If you know your variables in advance, you can use LPInput with a generic type for the variables and it will check your bounds, integers and binaries.
 
 ```ts
 const variables = ["x1", "x2", "x3", "x4"] as const
 type Variables = (typeof variables)[number]
 
-const input: ILPInput<Variables[]> = {
+const input: LPInput<Variables[]> = {
   optimizationType: "max",
   objective: "x1 + 2 x2 + 4 x3 + x4",
   constraints: ["- x1 + x2 + x3 + 10 x4 <= 20", "x1 - 4 x2 + x3 <= 30", "x2 - 0.5 x4 = 0"],
   bounds: ["0 <= x1 <= 40", "2 <= x4 <= 3"],
+  integers: ["x1"],
 }
 const result = await solveLinearProgram(input)
-// { objectiveValue: 87.5, variableValues: { x1: 17.5, x2: 1, x3: 16.5, x4: 2 } }
+// { objectiveValue: 86.8, variableValues: { x1: 18, x2: 1.04, x3: 16.16, x4: 2.08 } }
 ```
 
 ## Input building
@@ -44,14 +46,14 @@ For complex problems, you may want to build your input dynamically and merge tog
 We expose some type-safe utilities to help with this.
 
 ```ts
-const part1: ILPInputPart = {
+const part1: LPInputPart = {
   constraints: ["a > 0", "b > 0"],
   objective: `1 a + 2 b`,
   binaries: ["a"],
   bounds: [],
   integers: ["b"],
 }
-const part2: ILPInputPart = {
+const part2: LPInputPart = {
   constraints: ["c > 0", "d > 0"],
   objective: `3 c + 4 d`,
   binaries: ["c"],
