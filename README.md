@@ -15,11 +15,12 @@ const input: LPInput = {
   optimizationType: "max",
   objective: "x1 + 2 x2 + 4 x3 + x4",
   constraints: ["- x1 + x2 + x3 + 10 x4 <= 20", "x1 - 4 x2 + x3 <= 30", "x2 - 0.5 x4 = 0"],
-  bounds: ["0 <= x1 <= 40", "2 <= x4 <= 3"],
-  integers: ["x1"],
+  bounds: ["0 <= x1 <= 40", "0 <= x3 <= 20.5"],
+  integers: ["x2"],
+  binaries: ["x4"],
 }
 const result = await solveLinearProgram(input)
-// { objectiveValue: 86.8, variableValues: { x1: 18, x2: 1.04, x3: 16.16, x4: 2.08 } }
+// { objectiveValue: 91.5, variableValues: { x1: 9.5, x2: 0, x3: 20.5, x4: 0 } }
 ```
 
 If you know your variables in advance, you can use LPInput with a generic type for the variables and it will check your bounds, integers and binaries.
@@ -32,11 +33,12 @@ const input: LPInput<Variables[]> = {
   optimizationType: "max",
   objective: "x1 + 2 x2 + 4 x3 + x4",
   constraints: ["- x1 + x2 + x3 + 10 x4 <= 20", "x1 - 4 x2 + x3 <= 30", "x2 - 0.5 x4 = 0"],
-  bounds: ["0 <= x1 <= 40", "2 <= x4 <= 3"],
-  integers: ["x1"],
+  bounds: ["0 <= x1 <= 40", "0 <= x3 <= 20.5"],
+  integers: ["x2"],
+  binaries: ["x4"],
 }
 const result = await solveLinearProgram(input)
-// { objectiveValue: 86.8, variableValues: { x1: 18, x2: 1.04, x3: 16.16, x4: 2.08 } }
+// { objectiveValue: 91.5, variableValues: { x1: 9.5, x2: 0, x3: 20.5, x4: 0 } }
 ```
 
 ## Input building

@@ -36,7 +36,7 @@ End
 })
 
 describe("solveLinearProgram", () => {
-  it("should solve the highs-js example program correctly", async () => {
+  it("should solve a linear program with binaries and integers", async () => {
     const variables = ["x1", "x2", "x3", "x4"] as const
     type Variables = (typeof variables)[number]
 
@@ -44,12 +44,13 @@ describe("solveLinearProgram", () => {
       optimizationType: "max",
       objective: "x1 + 2 x2 + 4 x3 + x4",
       constraints: ["- x1 + x2 + x3 + 10 x4 <= 20", "x1 - 4 x2 + x3 <= 30", "x2 - 0.5 x4 = 0"],
-      bounds: ["0 <= x1 <= 40", "2 <= x4 <= 3"],
-      integers: ["x1"],
+      bounds: ["0 <= x1 <= 40", "0 <= x3 <= 20.5"],
+      integers: ["x2"],
+      binaries: ["x4"],
     }
     const result = await solveLinearProgram(input)
-    console.log(result)
-    expect(result.objectiveValue).toBe(86.8)
+
+    expect(result.objectiveValue).toBe(91.5)
   })
 
   it("should solve a linear program correctly", async () => {
