@@ -37,7 +37,46 @@ const result = await solveLinearProgram(input)
 // { objectiveValue: 87.5, variableValues: { x1: 17.5, x2: 1, x3: 16.5, x4: 2 } }
 ```
 
-## Direct usage
+## Input building
+
+For complex problems, you may want to build your input dynamically and merge together variables from different sources.
+
+We expose some type-safe utilities to help with this.
+
+```ts
+const part1: ILPInputPart = {
+  constraints: ["a > 0", "b > 0"],
+  objective: `1 a + 2 b`,
+  binaries: ["a"],
+  bounds: [],
+  integers: ["b"],
+}
+const part2: ILPInputPart = {
+  constraints: ["c > 0", "d > 0"],
+  objective: `3 c + 4 d`,
+  binaries: ["c"],
+  bounds: [],
+  integers: ["d"],
+}
+const parts = [part1, part2]
+
+const input = inputPartsToInput(parts, { optimizationType: "min" })
+const expected = {
+  constraints: ["a > 0", "b > 0", "c > 0", "d > 0"],
+  objective: "1 a + 2 b + 3 c + 4 d",
+  bounds: [],
+  integers: ["b", "d"],
+  binaries: ["a", "c"],
+  optimizationType: "min",
+}
+expect(input).toEqual(expected)
+```
+
+or if you need to merge input parts ahead of time: `mergeInputParts([part1, part2])`
+
+## Variable formatting
+
+If you're working with dynamic variable names and running into bugs with invalid characters (e.g. -\*^[]+ or variables starting with a number), try `LPFormatter.formatVariable` to make a best-effort attempt at making your variable names valid.
 
 # Reference material
 
@@ -45,7 +84,6 @@ Useful material for working with Linear Programs:
 
 - Linear Programming basics: https://web.mit.edu/lpsolve/doc/LPBasics.htm
 - How to solve fixed costs with binaries: https://en.wikipedia.org/wiki/Big_M_method and https://www.youtube.com/watch?v=oVOuR-_x3U0
--
 
 # TO DO:
 
