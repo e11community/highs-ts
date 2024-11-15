@@ -1,4 +1,4 @@
-import { ILPInput } from "../src"
+import { LPInput } from "../src"
 import { formatInputHighs, solveLinearProgram } from "../src/linear-program.solver"
 
 describe("formatInputHighs", () => {
@@ -6,7 +6,7 @@ describe("formatInputHighs", () => {
     const variables = ["Ms", "Ds", "Mg", "Dg"] as const
     type Variables = (typeof variables)[number]
 
-    const exampleObj: ILPInput<Variables[]> = {
+    const exampleObj: LPInput<Variables[]> = {
       optimizationType: "min",
       integers: ["Ms", "Ds", "Mg", "Dg"],
       objective: "29 Ms + 15 Ds + 111 Mg + 12 Dg",
@@ -40,7 +40,7 @@ describe("solveLinearProgram", () => {
     const variables = ["x1", "x2", "x3", "x4"] as const
     type Variables = (typeof variables)[number]
 
-    const input: ILPInput<Variables[]> = {
+    const input: LPInput<Variables[]> = {
       optimizationType: "max",
       objective: "x1 + 2 x2 + 4 x3 + x4",
       constraints: ["- x1 + x2 + x3 + 10 x4 <= 20", "x1 - 4 x2 + x3 <= 30", "x2 - 0.5 x4 = 0"],
@@ -53,7 +53,7 @@ describe("solveLinearProgram", () => {
   it("should solve a linear program correctly", async () => {
     const variables = ["Ms", "Ds", "Mg", "Dg"] as const
     type Variables = (typeof variables)[number]
-    const input: ILPInput<Variables[]> = {
+    const input: LPInput<Variables[]> = {
       optimizationType: "min",
       objective: "29 Ms + 15 Ds + 111 Mg + 12 Dg",
       constraints: ["100 Ds + 200 Ms >= 300", "100 Dg + 1000 Mg >= 500"],
@@ -65,7 +65,7 @@ describe("solveLinearProgram", () => {
   it("should solve a linear program with binaries correctly", async () => {
     const variables = ["Ms", "Ds", "Mg", "Dg", "Dsh", "Msh"] as const
     type Variables = (typeof variables)[number]
-    const input: ILPInput<Variables[]> = {
+    const input: LPInput<Variables[]> = {
       optimizationType: "min",
       objective: "29 Ms + 15 Ds + 111 Mg + 12 Dg + 6 Msh + 6 Dsh",
       constraints: ["100 Ds + 200 Ms >= 300", "100 Dg + 1000 Mg >= 500", "9001 Msh - Ms - Mg >= 0", "9001 Dsh - Ds - Dg >= 0"],
@@ -79,7 +79,7 @@ describe("solveLinearProgram", () => {
 
   it("should auto-fix invalid variables", async () => {
     const formatVariables = ["M-s", "0Ds"]
-    const input: ILPInput = {
+    const input: LPInput = {
       optimizationType: "min",
       objective: "29 M-s + 15 0Ds",
       constraints: ["100 0Ds + 200 M-s >= 300"],
